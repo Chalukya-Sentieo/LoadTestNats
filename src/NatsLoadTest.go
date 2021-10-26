@@ -16,7 +16,7 @@ import (
 	hdrhistogram "github.com/HdrHistogram/hdrhistogram-go"
 )
 
-const PUB_RATE_PER_SEC = 60
+const PUB_RATE_PER_SEC = 10
 const MSG_SIZE = 128
 const NO_OF_MSGS = 1000
 const FSECS = float64(time.Second)

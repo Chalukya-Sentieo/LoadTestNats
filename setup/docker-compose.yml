@@ -12,6 +12,6 @@ services:
         NATS_SERVERS: "nats://13.233.167.108:4222,nats://13.127.160.94:4222,nats://13.234.110.245:4222,nats://13.235.245.159:4222,nats://52.66.214.53:4222"
     #command: "tail -f /dev/null"
     ports:
-      - 9999:80
+      - 9999:9999
     volumes:
-      - './durationMetrics:/mnt/'
+      - './durationMetrics:/tmp/'
