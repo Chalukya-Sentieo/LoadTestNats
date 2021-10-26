@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  go-server:
+    container_name: go-server
+    build:
+      context: ../
+      dockerfile: ./setup/Dockerfile
+    command: "tail -f /dev/null"
+    ports:
+      - 9999:80
+    volumes:
+      - '../src/:/go/'
+      - '../go.*:/go/'
