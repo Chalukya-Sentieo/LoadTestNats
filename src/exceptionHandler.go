@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/ansel1/merry"
-	"github.com/getsentry/sentry-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,8 +37,6 @@ func (exp *BadRequestException) captureException(errMsg string) {
 }
 
 func (exp *BadRequestException) handleError(c *gin.Context) {
-	sentry.CaptureException(exp.err)
-
 	errorBody := appendStacktrace(exp.err)
 	c.AbortWithStatusJSON(exp.statusCode, errorBody)
 }
@@ -63,8 +60,6 @@ func (exp *UnauthorizedRequestException) captureException(errMsg string) {
 }
 
 func (exp *UnauthorizedRequestException) handleError(c *gin.Context) {
-	sentry.CaptureException(exp.err)
-
 	errorBody := appendStacktrace(exp.err)
 	c.AbortWithStatusJSON(exp.statusCode, errorBody)
 }
@@ -88,8 +83,6 @@ func (exp *InternalServerError) captureException(errMsg string) {
 }
 
 func (exp *InternalServerError) handleError(c *gin.Context) {
-	sentry.CaptureException(exp.err)
-
 	errorBody := appendStacktrace(exp.err)
 	c.AbortWithStatusJSON(exp.statusCode, errorBody)
 }
@@ -128,59 +121,3 @@ func appendStacktrace(err merry.Error) gin.H {
 	}
 	return errorMsg
 }
-
-/**
-Initialize Sentry SDK
-*/
-
-// func prettyPrint(v interface{}) string {
-// 	pp, _ := json.MarshalIndent(v, "", "  ")
-// 	return string(pp)
-// }
-
-// func initializeSentry() {
-// 	APP_DEBUG := false
-// 	if os.Getenv("APP_DEBUG") == "true" {
-// 		// SENTRY_DEBUG_MODE set this to true in your env to make sure sentry can report exceptions even in your debug environments
-// 		if os.Getenv("SENTRY_DEBUG_MODE") != "true" {
-// 			return
-// 		}
-// 		APP_DEBUG = true
-// 	}
-// 	err := sentry.Init(sentry.ClientOptions{
-// 		// Either set your DSN here or set the SENTRY_DSN environment variable.
-// 		Dsn: os.Getenv("SENTRY_DSN"),
-// 		// Either set environment and release here or set the SENTRY_ENVIRONMENT
-// 		// and SENTRY_RELEASE environment variables.
-// 		Environment: os.Getenv("APP_ENV"),
-// 		Release:     os.Getenv("RELEASE"),
-// 		// Enable printing of SDK debug messages.
-// 		// Useful when getting started or trying to figure something out.
-// 		Debug: APP_DEBUG,
-// 		BeforeSend: func(event *sentry.Event, hint *sentry.EventHint) *sentry.Event {
-// 			// if ex, ok := hint.OriginalException.(ExceptionHandler); ok {
-// 			// 	event.Message = event.Message + " - " + fmt.Sprint(ex)
-// 			// 	log.Println("Exception caught. Sending to sentry", ex)
-// 			// }
-
-// 			//fmt.Printf("Before send %s\n\n", prettyPrint(event))
-// 			return event
-// 		},
-// 		BeforeBreadcrumb: func(breadcrumb *sentry.Breadcrumb, _ *sentry.BreadcrumbHint) *sentry.Breadcrumb {
-// 			// if breadcrumb.Message == "Random breadcrumb 3" {
-// 			// 	breadcrumb.Message = "Not so random breadcrumb 3"
-// 			// }
-
-// 			// log.Printf("Breadcrumbs %s\n\n", prettyPrint(breadcrumb))
-
-// 			return breadcrumb
-// 		},
-// 	})
-// 	if err != nil {
-// 		log.Panicf("Error in sentry.Init: %s", err)
-// 	}
-// 	// Flush buffered events before the program terminates.
-// 	// Set the timeout to the maximum duration the program can afford to wait.
-// 	defer sentry.Flush(2 * time.Second)
-// 	defer sentry.Recover()
-// }

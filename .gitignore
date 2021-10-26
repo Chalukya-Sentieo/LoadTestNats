@@ -4,14 +4,6 @@
 *.dll
 *.so
 *.dylib
-<<<<<<< HEAD
-
-=======
-.vscode
-.env
-tmp/
-GinGolangServer
->>>>>>> 63c55a0733cffbddedec25e5738ec9a10fdeb9fa
 # Test binary, built with `go test -c`
 *.test
 

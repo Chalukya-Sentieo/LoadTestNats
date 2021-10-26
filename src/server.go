@@ -5,8 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/Chalukya-Sentieo/LoadTestNats/src/modules/exceptionHandler.go"
-	"github.com/Chalukya-Sentieo/LoadTestNats/src/modules/initializer.go"
 )
 
 func main() {
